@@ -3,86 +3,60 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Personagens de One Piece</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      background-color: #f0f0f0;
-      padding: 20px;
-    }
-    h1 {
-      text-align: center;
-    }
-    #characters {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
-    }
-    .card {
-      background-color: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      width: 200px;
-      padding: 10px;
-      text-align: center;
-    }
-    .card img {
-      width: 100%;
-      height: auto;
-      border-radius: 8px;
-    }
-    .card h2 {
-      font-size: 1.2em;
-      margin: 10px 0 5px;
-    }
-    .card p {
-      margin: 5px 0;
-      font-size: 0.9em;
-    }
-  </style>
+  <title>Trunfo de One Piece</title>
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <h1>Personagens de One Piece</h1>
+  <h1>Trunfo de One Piece</h1>
+  
+  <div class="game-container">
+    <div id="loading" class="loading">
+      <div class="loading-spinner"></div>
+      <p>Carregando personagens...</p>
+    </div>
+
+    <div id="error-message" class="error" style="display: none;"></div>
+
+    <div id="load-fallback" style="display: none;">
+      <p>Não foi possível carregar dados da API. Use o botão abaixo para carregar personagens de backup.</p>
+      <button id="load-fallback-btn">Carregar Dados de Backup</button>
+    </div>
+    
+    <div id="game-content" style="display: none;">
+      <div class="game-info">
+        <div id="game-status">Selecione um atributo para jogar!</div>
+        <div class="score">
+          <div>Jogador: <span id="player-score">0</span></div>
+          <div>Computador: <span id="computer-score">0</span></div>
+        </div>
+      </div>
+      
+      <div class="cards-container">
+        <div id="player-deck">
+          <div class="deck-title">Seu Card</div>
+          <div class="card-count">Cards restantes: <span id="player-cards-count">0</span></div>
+          <div id="player-card" class="card"></div>
+        </div>
+        
+        <div id="computer-deck">
+          <div class="deck-title">Card do Computador</div>
+          <div class="card-count">Cards restantes: <span id="computer-cards-count">0</span></div>
+          <div id="computer-card" class="card"></div>
+        </div>
+      </div>
+      
+      <div class="controls">
+        <button id="play-btn">Jogar</button>
+        <button id="next-btn" class="hidden">Próxima Rodada</button>
+        <button id="restart-btn" class="hidden">Reiniciar Jogo</button>
+      </div>
+    </div>
+  </div>
+  
   <div id="characters"></div>
 
-  <script>
-    async function fetchCharacters() {
-      try {
-        const response = await fetch('https://api.api-onepiece.com/v2/characters/en');
-        const data = await response.json();
-
-        const container = document.getElementById('characters');
-        data.forEach(character => {
-          const card = document.createElement('div');
-          card.className = 'card';
-
-          const img = document.createElement('img');
-          img.src = character.image;
-          img.alt = character.name;
-
-          const name = document.createElement('h2');
-          name.textContent = character.name;
-
-          const bounty = document.createElement('p');
-          bounty.textContent = 'Recompensa: ' + (character.bounty || 'N/A');
-
-          const fruit = document.createElement('p');
-          fruit.textContent = 'Fruta: ' + (character.devil_fruit || 'Nenhuma');
-
-          card.appendChild(img);
-          card.appendChild(name);
-          card.appendChild(bounty);
-          card.appendChild(fruit);
-
-          container.appendChild(card);
-        });
-      } catch (error) {
-        console.error('Erro ao buscar personagens:', error);
-      }
-    }
-
-    fetchCharacters();
-  </script>
+  <!-- Carregando scripts -->
+  <script src="js/characters.js"></script>
+  <script src="js/game.js"></script>
 </body>
 </html>
