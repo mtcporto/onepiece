@@ -5,11 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Trunfo de One Piece</title>
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-  <h1>Trunfo de One Piece</h1>
+  <!-- Header com título e botão de configurações -->
+  <header class="game-header">
+    <h1>Trunfo de One Piece</h1>
+    <button id="settings-toggle" class="icon-button" aria-label="Configurações">
+      <i class="fas fa-cog"></i>
+    </button>
+  </header>
+  
+  <!-- Elemento de anúncio para leitores de tela -->
+  <div id="screen-reader-announcement" class="sr-only" aria-live="polite"></div>
   
   <div class="game-container">
+    <!-- Removido game-controls que contém botão de configurações, agora está no header -->
+
     <div id="loading" class="loading">
       <div class="loading-spinner"></div>
       <p>Carregando personagens...</p>
@@ -54,6 +66,63 @@
   </div>
   
   <div id="characters"></div>
+
+  <!-- Modal de Configurações -->
+  <div id="settings-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Configurações</h2>
+      
+      <div class="settings-section">
+        <h3>Número de Cartas</h3>
+        <div class="radio-group">
+          <label>
+            <input type="radio" name="card-count" value="30" checked> 
+            30 cartas (15 para cada jogador)
+          </label>
+          <label>
+            <input type="radio" name="card-count" value="40"> 
+            40 cartas (20 para cada jogador)
+          </label>
+          <label>
+            <input type="radio" name="card-count" value="50"> 
+            50 cartas (25 para cada jogador)
+          </label>
+        </div>
+      </div>
+      
+      <div class="settings-section">
+        <h3>Sons</h3>
+        <label class="switch">
+          <input type="checkbox" id="sound-enabled" checked>
+          <span class="slider round"></span>
+        </label>
+        <span>Ativar sons</span>
+      </div>
+      
+      <div class="settings-section">
+        <h3>Animações</h3>
+        <label class="switch">
+          <input type="checkbox" id="animations-enabled" checked>
+          <span class="slider round"></span>
+        </label>
+        <span>Ativar animações</span>
+      </div>
+      
+      <div class="settings-section">
+        <h3>Cache</h3>
+        <button id="clear-cache-btn" class="settings-btn">Limpar Cache</button>
+      </div>
+      
+      <button id="save-settings" class="settings-btn primary">Salvar Configurações</button>
+    </div>
+  </div>
+
+  <!-- Áudio -->
+  <audio id="win-sound" src="sounds/win.mp3" preload="auto"></audio>
+  <audio id="lose-sound" src="sounds/lose.mp3" preload="auto"></audio>
+  <audio id="draw-sound" src="sounds/draw.mp3" preload="auto"></audio>
+  <audio id="card-flip" src="sounds/card-flip.mp3" preload="auto"></audio>
 
   <!-- Carregando scripts -->
   <script src="js/characters.js"></script>

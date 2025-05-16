@@ -5,6 +5,27 @@
   box-sizing: border-box;
 }
 
+/* Adicionar estilo para o cabeçalho para alinhar título e botão */
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.game-header h1 {
+  margin-bottom: 0; /* Remover margem inferior do título */
+  flex-grow: 1;
+  text-align: left;
+}
+
+.game-header .icon-button {
+  margin-left: 20px;
+}
+
 :root {
   --primary-color: #e94560;
   --secondary-color: #0f3460;
@@ -156,7 +177,7 @@ h2 {
   background: rgba(233, 69, 96, 0.2);
 }
 
-/* Estilos para os cards */
+/* Estilos para os cards - Padronizados para jogador e computador */
 .cards-container {
   display: flex;
   justify-content: space-around;
@@ -170,6 +191,11 @@ h2 {
   max-width: 300px;
   text-align: center;
   animation: slideIn 0.5s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+  box-sizing: border-box;
 }
 
 .deck-title {
@@ -196,6 +222,8 @@ h2 {
   position: relative;
   transform-style: preserve-3d;
   perspective: 1000px;
+  direction: ltr; /* Ensure text is always left-to-right */
+  text-align: left; /* Left align text inside cards */
 }
 
 .card:hover {
@@ -203,22 +231,191 @@ h2 {
   box-shadow: 0 15px 30px rgba(0,0,0,0.4);
 }
 
-.card img {
-  width: 100%;
-  max-width: 200px;
-  height: auto;
-  border-radius: 8px;
-  border: 2px solid var(--primary-color);
-  object-fit: cover;
-  aspect-ratio: 3/4;
-  transition: var(--transition-normal);
+/* Remove os números 1, 2, 3 das cartas do jogador */
+.card .key-hint {
+  display: none;
 }
 
-.card h2 {
-  font-size: 1.4em;
-  margin: 10px 0 5px;
+.card-attributes {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+  direction: ltr;
+  overflow: visible; /* Remove rolagem */
+  flex-grow: 1; /* Permite que os atributos ocupem o espaço restante */
+}
+
+.card-attributes li {
+  background-color: rgba(255,255,255,0.1);
+  margin: 8px 0;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: var(--transition-normal);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: default;
+}
+
+/* Estilo para atributos selecionados/vencedores/perdedores - Padronizado */
+.attribute.selected-attribute,
+.card-attributes li[data-attribute].selected-attribute {
+  background-color: var(--primary-color);
+  font-weight: bold;
+}
+
+/* Estilo para atributos vencedores - verde */
+.attribute.winner,
+.card-attributes li[data-attribute].winner {
+  background-color: rgba(46, 204, 113, 0.8);
+  animation: pulse 0.5s ease-in-out 2;
+}
+
+/* Estilo para atributos perdedores - vermelho */
+.attribute.loser,
+.card-attributes li[data-attribute].loser {
+  background-color: rgba(231, 76, 60, 0.8);
+}
+
+/* Certifique-se de que os campos de recompensa e fruta apareçam nas duas cartas */
+.card-attributes li[data-attribute="bounty"],
+.card-attributes li[data-attribute="devil_fruit"],
+.attribute[data-attribute="bounty"],
+.attribute[data-attribute="devil_fruit"] {
+  display: flex;
+}
+
+/* Estilos padronizados para as cartas do jogador e do computador */
+#player-card, #computer-card {
+  width: 100%;
+  height: 600px !important; /* Altura fixa maior para garantir espaço para todos os atributos */
+  background-color: var(--card-background);
+  border-radius: var(--border-radius);
+  padding: 20px;
+  box-shadow: var(--box-shadow);
+  position: relative;
+  border: 3px solid var(--secondary-color);
+  overflow: hidden; /* Previne qualquer transbordamento */
+}
+
+/* Imagem da carta */
+#player-card img, 
+#computer-card img,
+.card-image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+/* Lista de atributos */
+.card-attributes {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0 0;
+  overflow: visible;
+}
+
+/* Itens da lista */
+.card-attributes li {
+  background-color: rgba(255,255,255,0.1);
+  margin: 8px 0;
+  padding: 8px 12px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Verso da carta estilo completo */
+.card-back {
+  width: 100%;
+  height: 600px !important; /* Mesma altura que as cartas normais */
+  background-color: var(--primary-color);
+  border-radius: var(--border-radius);
+  background-image: url('../images/backcard.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+/* Estilo uniforme para a imagem */
+#player-card img, 
+#computer-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 5px;
+  display: block;
+  margin: 0 auto 15px;
+}
+
+/* Ajuste da imagem de fundo para carta virada */
+.card-back {
+  width: 100%;
+  height: 600px !important; /* Mesma altura que as cartas normais */
+  min-height: 600px !important;
+  max-height: 600px !important;
+  background-color: var(--primary-color);
+  border-radius: var(--border-radius);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('../images/backcard.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+/* Ajuste para a lista de atributos */
+.card-attributes {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+  direction: ltr;
+  overflow: visible; /* Remove rolagem */
+  flex-grow: 1; /* Permite crescer para preencher o espaço disponível */
+}
+
+/* Remover as diferentes bordas coloridas das cartas para padronização */
+#player-card,
+#computer-card {
+  border: 2px solid var(--secondary-color);
+}
+
+/* Estilo padronizado para ambas as cartas */
+#player-card img, 
+#computer-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 5px;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Garantir que os números ao lado dos atributos sejam removidos */
+.attribute-row .key-hint,
+.card-attributes li .key-hint {
+  display: none;
+}
+
+/* Padronizar a tipografia dos valores dos atributos */
+.attribute-value,
+.card-attributes .value {
   color: var(--text-highlight);
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+  font-weight: bold;
 }
 
 .attributes {
@@ -374,20 +571,38 @@ button:focus {
 }
 
 .card-back {
-  background: linear-gradient(145deg, #e94560, #c81d3e);
-  height: 350px;
-  border-radius: 8px;
+  width: 100%;
+  height: 600px !important; /* Mesma altura que as cartas normais */
+  background-color: var(--primary-color);
+  border-radius: var(--border-radius);
   display: flex;
-  align-items: center;
   justify-content: center;
-  font-size: 2em;
-  color: var(--text-highlight);
+  align-items: center;
+  font-size: 5rem;
   font-weight: bold;
-  background-image: url('https://i.imgur.com/IyrYDwc.png');
-  background-size: 80%;
+  box-shadow: var(--box-shadow);
+  color: var(--background-color);
+  background-image: url('../images/backcard.jpg');
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  box-shadow: inset 0 0 20px rgba(0,0,0,0.3);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+/* Computer card back should fill the entire card */
+#computer-card .card-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background-size: cover;
+  background-position: center;
 }
 
 /* Estilos de loading e estados */
@@ -482,6 +697,7 @@ button:focus {
 /* Animações e efeitos especiais */
 .flipped {
   animation: cardFlip 0.5s forwards;
+  transform: rotateY(0deg) !important; /* Prevent actual card flipping that's causing text reversal */
 }
 
 .card-glow {
@@ -614,17 +830,45 @@ button:focus {
   font-weight: bold;
   box-shadow: var(--box-shadow);
   color: var(--background-color);
+  background-image: url('../images/backcard.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Computer card back should fill the entire card */
+#computer-card.card-back {
+  height: 100%;
+  object-fit: cover;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+#computer-card .card-back {
+  height: 100%;
 }
 
 #player-card, #computer-card {
   width: 100%;
-  height: 100%;
+  height: auto;
+  min-height: 450px; /* Altura fixa maior para garantir que todos os conteúdos apareçam */
   background-color: var(--card-background);
   border-radius: var(--border-radius);
   padding: 15px;
   box-shadow: var(--box-shadow);
   position: relative;
-  transition: all 0.5s ease-out;
+  transition: all 0.3s ease;
+  direction: ltr;
+  text-align: left;
+  border: 2px solid var(--secondary-color);
+  overflow: hidden; /* Evita que conteúdo transborde */
+  display: flex;
+  flex-direction: column;
+  overflow: visible; /* Remove as barras de rolagem */
 }
 
 #player-card {
@@ -637,7 +881,7 @@ button:focus {
 
 #player-card img, #computer-card img {
   width: 100%;
-  height: 150px;
+  height: 220px;
   object-fit: cover;
   border-radius: 5px;
   display: block;
@@ -825,4 +1069,400 @@ footer {
 
 .card-container {
   animation: slideInUp 0.5s ease-out;
+}
+
+/* Game controls for icon buttons */
+.game-controls {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.icon-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  background-color: var(--secondary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.icon-button:hover {
+  background-color: var(--primary-color);
+  transform: translateY(-3px);
+}
+
+.icon-button:active {
+  transform: translateY(-1px);
+}
+
+.icon-button i {
+  pointer-events: none;
+}
+
+/* Remove the tooltip implementation that's causing issues */
+.icon-button[aria-label]::after {
+  content: "";
+  display: none;
+}
+
+.icon-button:hover::after {
+  display: none;
+}
+
+/* Disable the tooltip for game controls icon buttons */
+.game-controls .icon-button::after {
+  display: none !important;
+}
+
+/* Modal de Configurações */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  overflow: auto;
+}
+
+.modal-content {
+  height: 130%;  
+  background: linear-gradient(145deg, var(--background-medium), var(--background-light));
+  margin: 50px auto;
+  padding: 25px;
+  border-radius: 12px;
+  max-width: 500px;
+  position: relative;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+  animation: slideIn 0.3s ease-out;
+}
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 28px;
+  font-weight: bold;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: var(--transition-normal);
+}
+
+.close:hover {
+  color: var(--primary-color);
+}
+
+.settings-section {
+  margin-bottom: 25px;
+  padding: 15px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
+
+.settings-section h3 {
+  margin-bottom: 15px;
+  color: var(--text-highlight);
+  font-size: 1.2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 5px;
+}
+
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.radio-group label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 8px 10px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 5px;
+  transition: var(--transition-normal);
+}
+
+.radio-group label:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.radio-group input[type="radio"] {
+  margin-right: 10px;
+  accent-color: var(--primary-color);
+}
+
+/* Switch para toggles */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+  margin-right: 10px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: var(--primary-color);
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px var(--primary-color);
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 24px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.settings-btn {
+  background-color: var(--secondary-color);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: var(--transition-normal);
+  margin-top: 10px;
+}
+
+.settings-btn:hover {
+  background-color: var(--primary-color);
+}
+
+.settings-btn.primary {
+  background-color: var(--primary-color);
+  font-weight: bold;
+  margin-top: 20px;
+  padding: 12px 20px;
+  width: 100%;
+}
+
+.settings-btn.primary:hover {
+  background-color: #c32b47;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.card-name {
+  font-size: 1.6em;
+  margin: 0 0 15px 0;
+  text-align: center;
+  font-weight: bold;
+  color: var(--text-highlight);
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+  direction: ltr;
+  text-align: center;
+  font-weight: bold;
+}
+
+.card-attributes {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+  direction: ltr;
+  overflow: visible; /* Adiciona rolagem se necessário */
+  flex-grow: 1; /* Permite que os atributos ocupem o espaço restante */
+}
+
+.card-attributes li {
+  background-color: rgba(255,255,255,0.1);
+  margin: 8px 0;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: var(--transition-normal);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: default;
+}
+
+.card-attributes li[data-attribute] {
+  cursor: pointer;
+}
+
+.card-attributes li.selectable {
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.card-attributes li.selectable:hover {
+  background-color: rgba(255, 215, 0, 0.3);
+  transform: translateX(5px);
+}
+
+.card-attributes li.selectable:active {
+  background-color: rgba(255, 215, 0, 0.5);
+}
+
+.card-attributes li.selectable::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 3px;
+  background-color: var(--primary-color);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.card-attributes li.selectable:hover::before {
+  opacity: 1;
+}
+
+.card-attributes li.selectable:hover::before {
+  opacity: 1;
+}
+
+.card-attributes li.selectable::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 3px;
+  background-color: var(--primary-color);
+  opacity: 0;
+  transition: var(--transition-normal);
+}
+
+.card-attributes li.selectable:hover::before {
+  opacity: 1;
+}
+
+/* Fix for card images to ensure they fill the card space properly */
+.card-image {
+  width: 100%;
+  height: 220px; /* Set uniform height for all card images */
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid var(--primary-color);
+  display: block;
+  margin: 0 auto 10px;
+}
+
+/* Make computer card back image fill the card better */
+#computer-card .card-image {
+  height: 240px; /* Make the computer card back image taller */
+}
+
+.card-image.card-back {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Ajuste para que a carta do computador tenha altura apropriada quando virada */
+#computer-card .card-back {
+  height: 100%;
+  min-height: 220px;
+  max-height: 600px;
+  object-fit: cover;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Ajuste para o container da carta garantir tamanho apropriado */
+#computer-card {
+  min-height: 600px;
+}
+
+/* Garante que a imagem de fundo da carta virada preencha adequadamente */
+.card-back {
+  width: 100%;
+  height: 100%;
+  min-height: 220px;
+  background-color: var(--primary-color);
+  border-radius: var(--border-radius);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 5rem;
+  font-weight: bold;
+  box-shadow: var(--box-shadow);
+  color: var(--background-color);
+  background-image: url('../images/backcard.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Estilo para destacar o atributo selecionado pelo jogador */
+.card-attributes li.selected-attribute {
+  background-color: #e94560; /* Cor primária do tema */
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 0 5px rgba(233, 69, 96, 0.7);
+  transform: translateX(5px);
+  border-left: 3px solid #ffd700; /* Cor dourada para destacar */
+}
+
+.card-attributes li.selected-attribute .value {
+  color: white;
+  font-weight: bold;
 }

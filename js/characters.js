@@ -13,263 +13,26 @@ const CONFIG = {
 
 // URLs de APIs do One Piece - tentaremos em sequência
 const apiUrls = [
-  'https://api.api-onepiece.com/v2/characters/en',
-  'https://api.jikan.moe/v4/anime/21/characters', // API Jikan (MyAnimeList) para One Piece
-  'https://anime-facts-rest-api.herokuapp.com/api/v1/one_piece' // API de fatos sobre One Piece
-];
-
-// Dados de backup garantidos com URLs de imagens corrigidas
-const fallbackCharacters = [
-  {
-    id: 1,
-    name: "Monkey D. Luffy",
-    image: "https://i.imgur.com/V5lEOHo.jpg",
-    strength: 95,
-    intelligence: 70,
-    speed: 90,
-    bounty: "3.000.000.000 Berries",
-    devil_fruit: "Gomu Gomu no Mi"
-  },
-  {
-    id: 2,
-    name: "Roronoa Zoro",
-    image: "https://i.imgur.com/TIrPHnz.jpg",
-    strength: 93,
-    intelligence: 75,
-    speed: 85,
-    bounty: "1.111.000.000 Berries",
-    devil_fruit: "Nenhuma"
-  },
-  {
-    id: 3,
-    name: "Nami",
-    image: "https://i.imgur.com/Tzh2k2X.jpg",
-    strength: 65,
-    intelligence: 95,
-    speed: 80,
-    bounty: "366.000.000 Berries",
-    devil_fruit: "Nenhuma"
-  },
-  {
-    id: 4,
-    name: "Usopp",
-    image: "https://i.imgur.com/4a1n3RN.jpg",
-    strength: 70,
-    intelligence: 85,
-    speed: 75,
-    bounty: "500.000.000 Berries",
-    devil_fruit: "Nenhuma"
-  },
-  {
-    id: 5,
-    name: "Sanji",
-    image: "https://i.imgur.com/kAJgcCA.jpg",
-    strength: 90,
-    intelligence: 85,
-    speed: 92,
-    bounty: "1.032.000.000 Berries",
-    devil_fruit: "Nenhuma"
-  },
-  {
-    id: 6,
-    name: "Tony Tony Chopper",
-    image: "https://i.imgur.com/OcLghbX.jpg",
-    strength: 75,
-    intelligence: 95,
-    speed: 80,
-    bounty: "1.000 Berries",
-    devil_fruit: "Hito Hito no Mi"
-  },
-  {
-    id: 7,
-    name: "Nico Robin",
-    image: "https://i.imgur.com/xnVYVBm.jpg",
-    strength: 75,
-    intelligence: 98,
-    speed: 80,
-    bounty: "930.000.000 Berries",
-    devil_fruit: "Hana Hana no Mi"
-  },
-  {
-    id: 8,
-    name: "Franky",
-    image: "https://i.imgur.com/7RDZvw1.jpg",
-    strength: 88,
-    intelligence: 90,
-    speed: 75,
-    bounty: "394.000.000 Berries",
-    devil_fruit: "Nenhuma"
-  },
-  {
-    id: 9,
-    name: "Brook",
-    image: "https://i.imgur.com/q5MWJ3c.jpg",
-    strength: 80,
-    intelligence: 83,
-    speed: 90,
-    bounty: "383.000.000 Berries",
-    devil_fruit: "Yomi Yomi no Mi"
-  },
-  {
-    id: 10,
-    name: "Jinbe",
-    image: "https://i.imgur.com/iINQzwl.jpg",
-    strength: 92,
-    intelligence: 90,
-    speed: 85,
-    bounty: "1.100.000.000 Berries",
-    devil_fruit: "Nenhuma"
-  },
-  {
-    id: 11,
-    name: "Trafalgar D. Water Law",
-    image: "https://i.imgur.com/WwQ3f04.jpg",
-    strength: 90,
-    intelligence: 97,
-    speed: 88,
-    bounty: "3.000.000.000 Berries",
-    devil_fruit: "Ope Ope no Mi"
-  },
-  {
-    id: 12,
-    name: "Boa Hancock",
-    image: "https://i.imgur.com/5VHwo8e.jpg",
-    strength: 90,
-    intelligence: 85,
-    speed: 87,
-    bounty: "1.659.000.000 Berries",
-    devil_fruit: "Mero Mero no Mi"
-  },
-  {
-    id: 13,
-    name: "Marshall D. Teach",
-    image: "https://i.imgur.com/T7m3gkK.jpg",
-    strength: 96,
-    intelligence: 90,
-    speed: 75,
-    bounty: "3.996.000.000 Berries",
-    devil_fruit: "Yami Yami no Mi, Gura Gura no Mi"
-  },
-  {
-    id: 14,
-    name: "Monkey D. Garp",
-    image: "https://i.imgur.com/JonuHiQ.jpg",
-    strength: 95,
-    intelligence: 85,
-    speed: 85,
-    bounty: "Desconhecida",
-    devil_fruit: "Nenhuma"
-  },
-  {
-    id: 15,
-    name: "Portgas D. Ace",
-    image: "https://i.imgur.com/tjSXuxC.jpg",
-    strength: 93,
-    intelligence: 88,
-    speed: 94,
-    bounty: "550.000.000 Berries",
-    devil_fruit: "Mera Mera no Mi"
-  },
-  {
-    id: 16,
-    name: "Shanks",
-    image: "https://i.imgur.com/XzTaHSc.jpg",
-    strength: 99,
-    intelligence: 95,
-    speed: 94,
-    bounty: "4.048.900.000 Berries",
-    devil_fruit: "Nenhuma"
-  },
-  {
-    id: 17,
-    name: "Charlotte Katakuri",
-    image: "https://i.imgur.com/OGVQ5gX.jpg",
-    strength: 93,
-    intelligence: 90,
-    speed: 93,
-    bounty: "1.057.000.000 Berries",
-    devil_fruit: "Mochi Mochi no Mi"
-  },
-  {
-    id: 18,
-    name: "Silvers Rayleigh",
-    image: "https://i.imgur.com/DQi6TS0.jpg",
-    strength: 97,
-    intelligence: 96,
-    speed: 92,
-    bounty: "Desconhecida",
-    devil_fruit: "Nenhuma"
-  },
-  {
-    id: 19,
-    name: "Dracule Mihawk",
-    image: "https://i.imgur.com/cqq6Ajc.jpg",
-    strength: 98,
-    intelligence: 94,
-    speed: 90,
-    bounty: "Desconhecida",
-    devil_fruit: "Nenhuma"
-  },
-  {
-    id: 20,
-    name: "Kaido",
-    image: "https://i.imgur.com/F2hsMoB.jpg",
-    strength: 100,
-    intelligence: 85,
-    speed: 85,
-    bounty: "4.611.100.000 Berries",
-    devil_fruit: "Uo Uo no Mi, Modelo Seiryu"
-  }
+  'api/characters.json'
 ];
 
 // Estrutura adaptadora para diferentes formatos de API
 const apiAdapters = {
-  // Adaptador para a API original
-  'api-onepiece': function(data) {
-    return data.filter(char => 
-      char.image && 
-      !char.image.includes('default') &&
-      char.name
-    ).map(char => ({
+  'api-onepiece': data => data
+    .filter(char => 
+      // Filtra apenas personagens que possuem imagem
+      (char.images?.jpg?.image_url || char.images?.webp?.image_url)
+    )
+    .map(char => ({
       id: char.id,
       name: char.name,
-      image: char.image,
+      image: char.images?.jpg?.image_url || char.images?.webp?.image_url || '', // Use full-size images only
       strength: calculateAttribute(char.bounty, 1, 100),
-      intelligence: calculateAttribute(char.position, 1, 100),
+      intelligence: calculateAttribute(char.age, 1, 100),
       speed: Math.floor(Math.random() * 100) + 1,
-      bounty: formatBounty(char.bounty || 0),
-      devil_fruit: char.devil_fruit || 'Nenhuma'
-    }));
-  },
-  
-  // Adaptador para a API Jikan (MyAnimeList)
-  'jikan': function(data) {
-    if (!data.data) return [];
-    
-    return data.data.map((char, index) => ({
-      id: index + 1,
-      name: char.character.name,
-      image: char.character.images.jpg.image_url,
-      strength: Math.floor(Math.random() * 100) + 1,
-      intelligence: Math.floor(Math.random() * 100) + 1,
-      speed: Math.floor(Math.random() * 100) + 1,
-      bounty: formatBounty(Math.floor(Math.random() * 5000000000)),
-      devil_fruit: 'Desconhecida'
-    }));
-  },
-  
-  // Adaptador para a API de fatos do One Piece
-  'anime-facts': function(data) {
-    if (!data.data || !Array.isArray(data.data)) return [];
-    
-    // Esta API não retorna personagens, então usamos os dados de backup
-    // mas com imagens diferentes se disponíveis
-    return fallbackCharacters.map((char, index) => ({
-      ...char,
-      // Só para combinar alguns dados da API, se existirem
-      id: index + 1
-    }));
-  }
+      bounty: char.bounty ? formatBounty(parseInt(String(char.bounty).replace(/\D/g, ''), 10)) : 'Desconhecida',
+      devil_fruit: char.fruit?.roman_name || 'Nenhuma'
+    }))
 };
 
 /**
@@ -453,71 +216,33 @@ async function fetchWithTimeout(url, timeoutMs = CONFIG.API_TIMEOUT) {
 }
 
 /**
- * Busca os personagens de todas as APIs disponíveis em sequência até encontrar uma que funcione
- * @param {function} onStartLoading - Callback para início do carregamento
- * @param {function} onError - Callback para erro
- * @param {function} onComplete - Callback para sucesso com os personagens
+ * Busca os personagens do arquivo local
  */
 async function fetchCharacters(onStartLoading, onError, onComplete) {
   try {
     if (onStartLoading) onStartLoading();
-    
-    // Primeiro tenta carregar do cache
-    const cachedCharacters = loadFromCache();
-    if (cachedCharacters) {
-      if (onComplete) onComplete(cachedCharacters);
+
+    // Tenta carregar do cache
+    const cached = loadFromCache();
+    if (cached) {
+      if (onComplete) onComplete(cached);
       return;
     }
-    
-    // Se não tiver cache, tenta cada API em sequência
-    for (let i = 0; i < apiUrls.length; i++) {
-      const url = apiUrls[i];
-      console.log(`Tentando API ${i+1}/${apiUrls.length}: ${url}`);
-      
-      const startTime = performance.now();
-      const data = await fetchWithTimeout(url);
-      const endTime = performance.now();
-      console.log(`Tempo para buscar dados: ${Math.round(endTime - startTime)}ms`);
-      
-      if (!data) continue; // Se falhar, tenta a próxima API
-      
-      // Sanitiza os dados recebidos
-      const sanitizedData = sanitizeData(data);
-      
-      // Identifica qual adaptador usar
-      let adapter;
-      if (url.includes('jikan')) {
-        adapter = apiAdapters.jikan;
-      } else if (url.includes('anime-facts')) {
-        adapter = apiAdapters['anime-facts'];
-      } else {
-        adapter = apiAdapters['api-onepiece'];
-      }
-      
-      // Processa os dados usando o adaptador apropriado
-      const characters = adapter(sanitizedData);
-      
-      // Verifica se temos personagens suficientes
-      if (characters.length >= CONFIG.MIN_CHARACTERS) {
-        // Salva no cache para uso futuro
-        saveToCache(characters);
-        
-        if (onComplete) onComplete(characters);
-        return;
-      }
-      
-      console.log(`API ${i+1} retornou apenas ${characters.length} personagens, tentando próxima...`);
-    }
-    
-    // Se chegou aqui, nenhuma API funcionou adequadamente
-    throw new Error('Nenhuma das APIs retornou dados suficientes');
-    
+
+    // Busca o JSON local
+    const response = await fetch(apiUrls[0], { headers: { 'Accept': 'application/json', 'Cache-Control': 'no-cache' } });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const data = await response.json();
+
+    // Adapta os dados e salva no cache
+    const characters = apiAdapters['api-onepiece'](data);
+    if (characters.length < CONFIG.MIN_CHARACTERS) throw new Error('Poucos personagens no arquivo local');
+    saveToCache(characters);
+
+    if (onComplete) onComplete(characters);
   } catch (error) {
     console.error('Erro ao buscar personagens:', error);
-    
-    if (onError) {
-      onError(`Erro ao carregar personagens: ${error.message}`);
-    }
+    if (onError) onError(`Erro ao carregar personagens: ${error.message}`);
   }
 }
 
@@ -576,14 +301,6 @@ async function testApiConnection(onApiAvailable, onApiError) {
 }
 
 /**
- * Retorna os personagens de backup
- * @returns {Array} - Array de personagens de backup
- */
-function getBackupCharacters() {
-  return [...fallbackCharacters];
-}
-
-/**
  * Limpa o cache de personagens
  */
 function clearCache() {
@@ -601,8 +318,23 @@ function clearCache() {
 window.CharacterService = {
   fetchCharacters,
   testApiConnection,
-  getBackupCharacters,
   calculateAttribute,
   formatBounty,
-  clearCache
+  clearCache,
+  getBackupCharacters: () => {
+    console.log("Using backup character data.");
+    // Provide a small, predefined list of characters as a fallback
+    return [
+      { id: 'backup1', name: 'Monkey D. Luffy (Backup)', image: 'https://cdn.myanimelist.net/images/characters/9/310307.webp', strength: 95, intelligence: 70, speed: 90, bounty: '3,000,000,000', devil_fruit: 'Gomu Gomu no Mi' },
+      { id: 'backup2', name: 'Roronoa Zoro (Backup)', image: 'https://cdn.myanimelist.net/images/characters/3/100534.webp', strength: 92, intelligence: 65, speed: 85, bounty: '1,101,000,000', devil_fruit: 'N/A' },
+      { id: 'backup3', name: 'Nami (Backup)', image: 'https://cdn.myanimelist.net/images/characters/2/263249.webp', strength: 60, intelligence: 85, speed: 70, bounty: '366,000,000', devil_fruit: 'N/A' },
+      { id: 'backup4', name: 'Usopp (Backup)', image: 'https://cdn.myanimelist.net/images/characters/16/188076.webp', strength: 65, intelligence: 75, speed: 70, bounty: '500,000,000', devil_fruit: 'N/A' },
+      { id: 'backup5', name: 'Sanji (Backup)', image: 'https://cdn.myanimelist.net/images/characters/5/136769.webp', strength: 90, intelligence: 75, speed: 88, bounty: '1,032,000,000', devil_fruit: 'N/A' },
+      { id: 'backup6', name: 'Tony Tony Chopper (Backup)', image: 'https://cdn.myanimelist.net/images/characters/9/100533.webp', strength: 50, intelligence: 90, speed: 60, bounty: '1,000', devil_fruit: 'Hito Hito no Mi' },
+      { id: 'backup7', name: 'Nico Robin (Backup)', image: 'https://cdn.myanimelist.net/images/characters/16/363700.webp', strength: 70, intelligence: 95, speed: 70, bounty: '930,000,000', devil_fruit: 'Hana Hana no Mi' },
+      { id: 'backup8', name: 'Franky (Backup)', image: 'https://cdn.myanimelist.net/images/characters/13/210053.webp', strength: 85, intelligence: 60, speed: 65, bounty: '394,000,000', devil_fruit: 'N/A' },
+      { id: 'backup9', name: 'Brook (Backup)', image: 'https://cdn.myanimelist.net/images/characters/10/100532.webp', strength: 75, intelligence: 70, speed: 80, bounty: '383,000,000', devil_fruit: 'Yomi Yomi no Mi' },
+      { id: 'backup10', name: 'Jinbe (Backup)', image: 'https://cdn.myanimelist.net/images/characters/3/483148.webp', strength: 93, intelligence: 80, speed: 70, bounty: '1,100,000,000', devil_fruit: 'N/A' }
+    ];
+  }
 };
