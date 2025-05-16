@@ -41,13 +41,13 @@ class TrumpGame {
     
     // Inicialização de sons
     this.sounds = {
-      cardFlip: new Audio('/onepiece/sounds/card-flip.mp3'),
-      win: new Audio('/onepiece/sounds/win.mp3'),
-      lose: new Audio('/onepiece/sounds/lose.mp3'),
-      draw: new Audio('/onepiece/sounds/draw.mp3'),
-      gameWin: new Audio('/onepiece/sounds/game-win.mp3'),
-      gameLose: new Audio('/onepiece/sounds/game-lose.mp3'),
-      click: new Audio('/onepiece/sounds/click.mp3')
+      cardFlip: new Audio('sounds/card-flip.mp3'),
+      win: new Audio('sounds/win.mp3'),
+      lose: new Audio('sounds/lose.mp3'),
+      draw: new Audio('sounds/draw.mp3'),
+      gameWin: new Audio('sounds/game-win.mp3'),
+      gameLose: new Audio('sounds/game-lose.mp3'),
+      click: new Audio('sounds/click.mp3')
     };
     
     // Pré-carrega os sons e define volume
