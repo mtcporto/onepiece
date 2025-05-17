@@ -64,12 +64,7 @@
 /* Estilos base do corpo e contêineres */
 body {
   font-family: 'Poppins', sans-serif;
-  background-color: var(--background-color);
-  background-image: linear-gradient(to bottom, rgba(0, 10, 40, 0.9), rgba(0, 0, 20, 0.95)), 
-                    url('https://i.imgur.com/JzGg5SB.jpg'); /* Fundo temático One Piece */
-  background-size: cover;
-  background-attachment: fixed;
-  background-position: center;
+  background-color: #101730; /* Azul escuro semelhante ao tema One Piece */
   color: var(--text-color);
   line-height: 1.6;
   padding: 20px;
@@ -77,17 +72,6 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(26, 26, 46, 0.85);
-  z-index: -1;
 }
 
 /* Estilo do cabeçalho com logo */
@@ -169,62 +153,78 @@ h2 {
   animation: fadeIn 0.5s ease-in-out;
 }
 
-/* Estilo para a área central de informações do jogo */
+/* Estilo para a área central de informações do jogo - ajustado para ser mais compacto */
 .game-info-center {
-  background: linear-gradient(145deg, rgba(0,51,102,0.8), rgba(0,0,128,0.8)); /* Azul navy temático */
+  background: linear-gradient(145deg, #002255, #001133); /* Azul navy mais escuro como na imagem */
   padding: 15px;
   border-radius: 10px;
   margin: 0 15px;
   text-align: center;
-  backdrop-filter: blur(5px);
   border: 2px solid var(--accent-color);
   box-shadow: 0 0 15px rgba(0,0,0,0.6);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  min-width: 250px;
-  max-width: 300px;
+  justify-content: center; /* Centraliza os elementos verticalmente */
+  width: 300px; /* Mesmo tamanho de largura */
+  height: auto; /* Altura automática baseada no conteúdo */
+  min-height: 200px; /* Altura mínima para garantir espaço suficiente */
+  align-self: center; /* Alinha ao centro verticalmente */
 }
 
 #game-status {
   text-align: center;
-  margin: 20px 0;
+  margin: 10px 0;
   font-size: 1.2rem;
   font-weight: bold;
-  padding: 10px;
+  padding: 12px 15px;
   border-radius: var(--border-radius);
-  background-color: var(--secondary-color);
-  box-shadow: var(--box-shadow);
+  background-color: rgba(0,0,0,0.3);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
   transition: var(--transition-normal);
   color: var(--straw-hat-yellow);
+  font-family: 'Luckiest Guy', cursive;
+  letter-spacing: 0.5px;
 }
 
 .score {
   display: flex;
-  justify-content: space-around;
-  font-size: 1.2em;
-  flex-wrap: wrap;
+  flex-direction: column; /* Elementos em coluna para ficarem mais juntos */
+  font-size: 1.1em;
+  margin: 15px 0;
 }
 
 .score div {
-  margin: 5px 10px;
-  padding: 5px 15px;
-  background: rgba(0,0,0,0.2);
-  border-radius: 20px;
+  margin: 5px auto; /* Centraliza horizontalmente */
+  padding: 8px 15px;
+  background: linear-gradient(90deg, rgba(128, 0, 0, 0.6), rgba(128, 0, 0, 0.3));
+  border-radius: 10px;
   transition: var(--transition-normal);
+  font-weight: bold;
+  width: 85%; /* Largura fixa para alinhamento */
+  border: 1px solid rgba(255, 215, 0, 0.3);
 }
 
 .score div:has(span:not(:empty)) {
-  background: rgba(212, 32, 38, 0.5); /* Vermelho chapéu do Luffy */
+  background: linear-gradient(90deg, rgba(212, 32, 38, 0.7), rgba(128, 0, 0, 0.4)); /* Vermelho chapéu do Luffy */
 }
 
-/* Estilos para os cards - Destaque central da UI */
-.cards-container {
+/* Controles - posicionados mais próximos dos outros elementos do game-info-center */
+.controls {
+  text-align: center;
+  margin-top: 15px;
   display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 20px;
-  margin-bottom: 20px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.controls button {
+  margin: 8px auto;
+  width: 85%; /* Largura fixa para alinhamento com os scores */
+  font-family: 'Luckiest Guy', cursive;
+  letter-spacing: 0.8px;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  padding: 8px 20px;
 }
 
 #player-deck, #computer-deck {
@@ -551,7 +551,20 @@ h2 {
 
 .controls {
   text-align: center;
-  margin-top: 20px;
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.controls button {
+  margin: 8px auto;
+  width: 85%; /* Largura fixa para alinhamento com os scores */
+  font-family: 'Luckiest Guy', cursive;
+  letter-spacing: 0.8px;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  padding: 8px 20px;
 }
 
 button {
@@ -1377,16 +1390,14 @@ input:checked + .slider:before {
 
 .card-name {
   font-family: 'Luckiest Guy', cursive;
-  font-size: 1.6em;
+  font-size: 1.8em;
   margin: 0 0 15px 0;
   text-align: center;
-  font-weight: bold;
   color: var(--straw-hat-yellow);
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-  letter-spacing: 0.5px;
-  direction: ltr;
-  text-align: center;
-  font-weight: bold;
+  text-shadow: 2px 2px 3px rgba(0,0,0,0.8);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  line-height: 1.2;
 }
 
 .card-attributes {
@@ -1540,4 +1551,15 @@ input:checked + .slider:before {
 .card-attributes li.selected-attribute .value {
   color: white;
   font-weight: bold;
+}
+
+/* Estilos para os cards - Destaque central da UI */
+.cards-container {
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  flex-wrap: nowrap;
+  gap: 20px;
+  margin-bottom: 20px;
+  width: 100%;
 }
