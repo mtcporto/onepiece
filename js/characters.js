@@ -11,11 +11,11 @@ const CONFIG = {
   CACHE_KEY: 'one_piece_trump_characters'
 };
 
-// URLs de APIs do One Piece - tentaremos em sequência
+// URLs da API centralizada do One Piece 
 const apiUrls = [
-  '/api/characters.json'
+  'api/characters.json'
 ];
-
+ 
 // Estrutura adaptadora para diferentes formatos de API
 const apiAdapters = {
   'api-onepiece': data => data
