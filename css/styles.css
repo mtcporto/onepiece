@@ -64,7 +64,12 @@
 /* Estilos base do corpo e contêineres */
 body {
   font-family: 'Poppins', sans-serif;
-  background-color: #101730; /* Azul escuro semelhante ao tema One Piece */
+  background-color: #101730; /* Fallback caso a imagem não carregue */
+  background-image: url('../images/onepiecewallpaper.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
   color: var(--text-color);
   line-height: 1.6;
   padding: 20px;
@@ -72,6 +77,18 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+/* Adicionar uma camada de escurecimento para melhorar a legibilidade do conteúdo sobre a imagem */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(16, 23, 48, 0.7); /* Mesma cor do fundo original, com transparência */
+  z-index: -1;
 }
 
 /* Estilo do cabeçalho com logo */
