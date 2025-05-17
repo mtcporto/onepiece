@@ -232,10 +232,40 @@ async function fetchCharacters(onStartLoading, onError, onComplete) {
       return;
     }
 
-    // Busca o JSON local
-    const response = await fetch(apiUrls[0], { headers: { 'Accept': 'application/json', 'Cache-Control': 'no-cache' } });
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    const data = await response.json();
+    // Tenta cada URL da API em sequência
+    let success = false;
+    let data = null;
+    let lastError = null;
+
+    for (const apiUrl of apiUrls) {
+      try {
+        console.log(`Tentando carregar personagens de: ${apiUrl}`);
+        const response = await fetch(apiUrl, { 
+          headers: { 
+            'Accept': 'application/json', 
+            'Cache-Control': 'no-cache' 
+          } 
+        });
+        
+        if (!response.ok) {
+          console.log(`Falha ao carregar de ${apiUrl}: ${response.status}`);
+          continue; // Tenta a próxima URL
+        }
+        
+        data = await response.json();
+        success = true;
+        console.log(`Personagens carregados com sucesso de: ${apiUrl}`);
+        break; // Sai do loop se conseguiu carregar
+      } catch (err) {
+        console.log(`Erro ao carregar de ${apiUrl}:`, err);
+        lastError = err;
+        // Continua tentando a próxima URL
+      }
+    }
+
+    if (!success) {
+      throw lastError || new Error('Todas as URLs de API falharam');
+    }
 
     // Adapta os dados e salva no cache
     const characters = apiAdapters['api-onepiece'](data);
