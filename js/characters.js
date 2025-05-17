@@ -11,15 +11,10 @@ const CONFIG = {
   CACHE_KEY: 'one_piece_trump_characters'
 };
 
-// URLs da API centralizada do One Piece - múltiplas opções para funcionar em diferentes ambientes
+// URLs da API centralizada do One Piece - apenas endpoints confirmados funcionais
 const apiUrls = [
   'https://onepiece-beta.vercel.app/api/characters-api', // Endpoint online (funcionando)
-  'api/characters-api',                                  // Endpoint local serverless
-  '/api/characters-api',                                 // Endpoint local com barra inicial
-  './api/characters-api',                                // Endpoint local com caminho relativo
-  'api/characters.json',                                 // Arquivo JSON estático (fallback)
-  '/api/characters.json',                                // Arquivo JSON estático com barra inicial
-  './api/characters.json'                                // Arquivo JSON estático com caminho relativo
+  'api/characters-api'                                    // Endpoint local (funcionando)
 ];
  
 // Estrutura adaptadora para diferentes formatos de API

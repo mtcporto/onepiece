@@ -138,15 +138,10 @@
       resultElement.style.display = 'block';
       resultElement.textContent = 'Testando API...';
       
-      // Testar todas as URLs de API possíveis
+      // Testar apenas as URLs de API confirmadas como funcionais
       const apiUrls = [
-        'https://onepiece-beta.vercel.app/api/characters-api', // Endpoint online
-        'api/characters-api',
-        '/api/characters-api',
-        './api/characters-api', 
-        'api/characters.json',
-        '/api/characters.json',
-        './api/characters.json'
+        'https://onepiece-beta.vercel.app/api/characters-api', // Endpoint online 
+        'api/characters-api'                                    // Endpoint local
       ];
       
       let successCount = 0;
