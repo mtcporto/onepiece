@@ -1054,7 +1054,7 @@ class TrumpGame {
     let playerAttrValue = 0;
     let computerAttrValue = 0;
     
-    // Para atributos numéricos, tentamos várias abordagens para extrair o valor
+    // Para atributos numéricos, extraímos valores numéricos de forma confiável
     if (this.selectedAttribute === 'strength' || this.selectedAttribute === 'intelligence' || this.selectedAttribute === 'speed') {
       // Se o valor não for undefined e for um número válido
       if (playerCard && playerCard[this.selectedAttribute] !== undefined) {
@@ -1092,57 +1092,23 @@ class TrumpGame {
     const computerAttrElement = this.computerCardElement.querySelector(`li[data-attribute="${this.selectedAttribute}"], .attribute[data-attribute="${this.selectedAttribute}"]`);
     
     // Limpa classes anteriores
-    if (playerAttrElement) {
-      playerAttrElement.classList.remove('winner', 'loser');
-    }
-    if (computerAttrElement) {
-      computerAttrElement.classList.remove('winner', 'loser');
-    }
+    if (playerAttrElement) playerAttrElement.classList.remove('winner', 'loser');
+    if (computerAttrElement) computerAttrElement.classList.remove('winner', 'loser');
     
     // Determina o vencedor da rodada
     let result;
     
-    // Comparação baseada no tipo de atributo
-    if (this.selectedAttribute === 'strength' || this.selectedAttribute === 'intelligence' || this.selectedAttribute === 'speed') {
-      // Para atributos numéricos diretos - Garantimos o uso de comparação numérica
-      if (playerAttrValue > computerAttrValue) {
-        result = 'player';
-      } else if (playerAttrValue < computerAttrValue) {
-        result = 'computer';
-      } else {
-        result = 'draw';
-      }
-    } else if (this.selectedAttribute === 'bounty') {
-      // Para recompensa, precisamos extrair os valores numéricos
-      const playerBounty = this.extractNumericBounty(playerCard.bounty);
-      const computerBounty = this.extractNumericBounty(computerCard.bounty);
-      
-      if (playerBounty > computerBounty) {
-        result = 'player';
-      } else if (playerBounty < computerBounty) {
-        result = 'computer';
-      } else {
-        result = 'draw';
-      }
-    } else if (this.selectedAttribute === 'devil_fruit') {
-      // Para fruta do diabo
-      if (playerCard.devil_fruit !== 'Nenhuma' && computerCard.devil_fruit === 'Nenhuma') {
-        result = 'player';
-      } else if (playerCard.devil_fruit === 'Nenhuma' && computerCard.devil_fruit !== 'Nenhuma') {
-        result = 'computer';
-      } else {
-        result = 'draw';
-      }
+    // Comparação simples baseada em valores numéricos
+    if (playerAttrValue > computerAttrValue) {
+      result = 'player';
+    } else if (playerAttrValue < computerAttrValue) {
+      result = 'computer';
     } else {
-      result = 'draw'; // Fallback em caso de atributo não reconhecido
+      result = 'draw';
     }
     
     // Log do resultado da comparação
     console.log(`Resultado da comparação: ${result}`);
-
-    // IMPORTANTE: Armazenamos o número de cartas antes da transferência para cálculos corretos
-    const playerDeckSizeBefore = this.playerDeck.length;
-    const computerDeckSizeBefore = this.computerDeck.length;
     
     // CORREÇÃO: Processamento do resultado e aplicação de efeitos visuais
     if (result === 'player') {
@@ -1157,9 +1123,9 @@ class TrumpGame {
       this.gameStatusElement.textContent = "Você venceu esta rodada!";
       this.playSound('win');
       
-      // CORREÇÃO: Adiciona as cartas aos baralhos corretos
-      this.playerDeck.push(playerCard);      // Adiciona a carta do jogador de volta ao seu deck
-      this.playerDeck.push(computerCard);    // Adiciona a carta do computador ao deck do jogador
+      // CORREÇÃO CRÍTICA: O vencedor ganha as cartas que estavam em jogo
+      this.playerDeck.push(playerCard);     // O jogador recupera sua carta
+      this.playerDeck.push(computerCard);   // O jogador ganha a carta do computador
       
       // Feedback para acessibilidade
       this.announceForScreenReaders(`Você venceu! ${this.getAttributeLabel(this.selectedAttribute)} do seu personagem (${playerAttrValue}) é maior que do oponente (${computerAttrValue}).`);
@@ -1175,9 +1141,9 @@ class TrumpGame {
       this.gameStatusElement.textContent = "O computador venceu esta rodada!";
       this.playSound('lose');
       
-      // CORREÇÃO: Adiciona as cartas aos baralhos corretos
-      this.computerDeck.push(playerCard);    // Adiciona a carta do jogador ao deck do computador
-      this.computerDeck.push(computerCard);  // Adiciona a carta do computador de volta ao seu deck
+      // CORREÇÃO CRÍTICA: O vencedor ganha as cartas que estavam em jogo
+      this.computerDeck.push(playerCard);   // O computador ganha a carta do jogador
+      this.computerDeck.push(computerCard); // O computador recupera sua carta
       
       // Feedback para acessibilidade
       this.announceForScreenReaders(`O computador venceu. ${this.getAttributeLabel(this.selectedAttribute)} do seu personagem (${playerAttrValue}) é menor que do oponente (${computerAttrValue}).`);
@@ -1185,20 +1151,20 @@ class TrumpGame {
       this.gameStatusElement.textContent = "Empate! Ambos mantêm suas cartas.";
       this.playSound('draw');
       
-      // Em caso de empate, cada jogador mantém sua carta
+      // Em caso de empate, cada jogador recupera sua própria carta
       this.playerDeck.push(playerCard);
       this.computerDeck.push(computerCard);
       
       // Feedback para acessibilidade
       this.announceForScreenReaders(`Empate! ${this.getAttributeLabel(this.selectedAttribute)} de ambos os personagens é ${playerAttrValue}.`);
     }
-
-    // Log detalhado de movimentação de cartas
+    
+    // Log detalhado da situação atual dos baralhos após a transferência
     console.log("Movimentação de cartas:", {
       resultado: result,
-      jogadorAntes: playerDeckSizeBefore,
+      jogadorAntes: this.playerDeck.length - (result === 'player' ? 2 : (result === 'computer' ? 0 : 1)),
       jogadorDepois: this.playerDeck.length,
-      computadorAntes: computerDeckSizeBefore,
+      computadorAntes: this.computerDeck.length - (result === 'computer' ? 2 : (result === 'player' ? 0 : 1)),
       computadorDepois: this.computerDeck.length
     });
     
@@ -1210,11 +1176,12 @@ class TrumpGame {
     this.playerScoreElement.textContent = this.playerScore.toString();
     this.computerScoreElement.textContent = this.computerScore.toString();
     
-    // Atualiza a contagem de cartas
+    // Atualiza a contagem de cartas na interface
     this.updateCardCount();
     
     // Log de debug para verificar a pontuação
     console.log(`Rodada ${this.roundCount}: Jogador ${this.playerScore} x ${this.computerScore} Computador`);
+    console.log(`Total de cartas - Jogador: ${this.playerDeck.length}, Computador: ${this.computerDeck.length}`);
     
     // Verifica se o jogo acabou
     if (this.playerDeck.length === 0 || this.computerDeck.length === 0) {
