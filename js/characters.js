@@ -13,7 +13,7 @@ const CONFIG = {
 
 // URLs de APIs do One Piece - tentaremos em sequência
 const apiUrls = [
-  'api/characters.json'
+  '/api/characters.json'
 ];
 
 // Estrutura adaptadora para diferentes formatos de API
