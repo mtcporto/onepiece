@@ -124,6 +124,65 @@
   <audio id="draw-sound" src="sounds/draw.mp3" preload="auto"></audio>
   <audio id="card-flip" src="sounds/card-flip.mp3" preload="auto"></audio>
 
+  <!-- Adicione este botão antes da tag </body> -->
+  <div style="position: fixed; bottom: 10px; left: 10px; z-index: 9999;">
+    <button id="test-api-btn" style="background-color: #3498db; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer;">
+      Testar API
+    </button>
+    <div id="api-result" style="margin-top: 5px; padding: 10px; background-color: rgba(0,0,0,0.7); color: white; max-width: 300px; max-height: 150px; overflow: auto; display: none;"></div>
+  </div>
+
+  <script>
+    document.getElementById('test-api-btn').addEventListener('click', function() {
+      const resultElement = document.getElementById('api-result');
+      resultElement.style.display = 'block';
+      resultElement.textContent = 'Testando API...';
+      
+      // Testar todas as URLs de API possíveis
+      const apiUrls = [
+        'api/characters',
+        '/api/characters',
+        './api/characters',
+        'api/characters.json',
+        '/api/characters.json',
+        './api/characters.json'
+      ];
+      
+      let successCount = 0;
+      const results = [];
+      
+      // Função para testar cada URL
+      const testUrl = (index) => {
+        if (index >= apiUrls.length) {
+          // Todos os testes concluídos
+          resultElement.innerHTML = `<strong>Resultados:</strong><br>${results.join('<br>')}`;
+          return;
+        }
+        
+        const url = apiUrls[index];
+        fetch(url)
+          .then(response => {
+            if (response.ok) {
+              successCount++;
+              results.push(`✅ ${url}: OK (${response.status})`);
+            } else {
+              results.push(`❌ ${url}: Falha (${response.status})`);
+            }
+          })
+          .catch(error => {
+            results.push(`❌ ${url}: Erro (${error.message})`);
+          })
+          .finally(() => {
+            // Testa a próxima URL
+            testUrl(index + 1);
+          });
+      };
+      
+      // Inicia os testes
+      testUrl(0);
+    });
+  </script>
+
   <!-- Carregando scripts -->
   <script src="js/characters.js"></script>
   <script src="js/game.js"></script>
