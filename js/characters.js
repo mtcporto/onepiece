@@ -13,12 +13,13 @@ const CONFIG = {
 
 // URLs da API centralizada do One Piece - múltiplas opções para funcionar em diferentes ambientes
 const apiUrls = [
-  'api/characters-api',       // Novo endpoint serverless (sem conflito)
-  '/api/characters-api',      // Novo endpoint serverless com barra inicial
-  './api/characters-api',     // Novo endpoint serverless com caminho relativo
-  'api/characters.json',      // Arquivo JSON estático (fallback)
-  '/api/characters.json',     // Arquivo JSON estático com barra inicial
-  './api/characters.json'     // Arquivo JSON estático com caminho relativo
+  'https://onepiece-beta.vercel.app/api/characters-api', // Endpoint online (funcionando)
+  'api/characters-api',                                  // Endpoint local serverless
+  '/api/characters-api',                                 // Endpoint local com barra inicial
+  './api/characters-api',                                // Endpoint local com caminho relativo
+  'api/characters.json',                                 // Arquivo JSON estático (fallback)
+  '/api/characters.json',                                // Arquivo JSON estático com barra inicial
+  './api/characters.json'                                // Arquivo JSON estático com caminho relativo
 ];
  
 // Estrutura adaptadora para diferentes formatos de API
