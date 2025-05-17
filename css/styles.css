@@ -1237,7 +1237,7 @@ footer {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
   z-index: 1000;
-  overflow: auto;
+  overflow-y: auto;
 }
 
 .modal-content {
@@ -1250,6 +1250,29 @@ footer {
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
   animation: slideIn 0.3s ease-out;
   border: 2px solid var(--straw-hat-yellow);
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  margin-bottom: 20px;
+}
+
+.modal-header h2 {
+  text-align: center;
+  font-family: 'Luckiest Guy', cursive;
+  color: var(--straw-hat-yellow);
+  margin: 0;
+}
+
+.modal-body {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.modal-footer {
+  margin-top: 20px;
+  padding-top: 15px;
 }
 
 .close {
@@ -1261,6 +1284,7 @@ footer {
   color: var(--text-color);
   cursor: pointer;
   transition: var(--transition-normal);
+  z-index: 1001;
 }
 
 .close:hover {
@@ -1286,6 +1310,7 @@ footer {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  margin-bottom: 5px; /* Adiciona espaço entre grupos de radio buttons */
 }
 
 .radio-group label {
@@ -1382,15 +1407,14 @@ input:checked + .slider:before {
 .settings-btn.primary {
   background-color: var(--primary-color);
   font-weight: bold;
-  margin-top: 20px;
   padding: 12px 20px;
   width: 100%;
-}
-
-.settings-btn.primary:hover {
-  background-color: #c32b47;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  font-family: 'Luckiest Guy', cursive;
+  letter-spacing: 1px;
+  margin-top: 20px;
+  position: relative;
 }
 
 .sr-only {

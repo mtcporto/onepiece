@@ -78,50 +78,56 @@
   <div id="settings-modal" class="modal">
     <div class="modal-content">
       <span class="close">&times;</span>
-      <h2>Configurações</h2>
+      <div class="modal-header">
+        <h2>Configurações</h2>
+      </div>
       
-      <div class="settings-section">
-        <h3>Número de Cartas</h3>
-        <div class="radio-group">
-          <label>
-            <input type="radio" name="card-count" value="30" checked> 
-            30 cartas (15 para cada jogador)
+      <div class="modal-body">
+        <div class="settings-section">
+          <h3>Número de Cartas</h3>
+          <div class="radio-group">
+            <label>
+              <input type="radio" name="card-count" value="30" checked> 
+              30 cartas (15 para cada jogador)
+            </label>
+            <label>
+              <input type="radio" name="card-count" value="40"> 
+              40 cartas (20 para cada jogador)
+            </label>
+            <label>
+              <input type="radio" name="card-count" value="50"> 
+              50 cartas (25 para cada jogador)
+            </label>
+          </div>
+        </div>
+        
+        <div class="settings-section">
+          <h3>Sons</h3>
+          <label class="switch">
+            <input type="checkbox" id="sound-enabled" checked>
+            <span class="slider round"></span>
           </label>
-          <label>
-            <input type="radio" name="card-count" value="40"> 
-            40 cartas (20 para cada jogador)
+          <span>Ativar sons</span>
+        </div>
+        
+        <div class="settings-section">
+          <h3>Animações</h3>
+          <label class="switch">
+            <input type="checkbox" id="animations-enabled" checked>
+            <span class="slider round"></span>
           </label>
-          <label>
-            <input type="radio" name="card-count" value="50"> 
-            50 cartas (25 para cada jogador)
-          </label>
+          <span>Ativar animações</span>
+        </div>
+        
+        <div class="settings-section">
+          <h3>Cache</h3>
+          <button id="clear-cache-btn" class="settings-btn">Limpar Cache</button>
         </div>
       </div>
       
-      <div class="settings-section">
-        <h3>Sons</h3>
-        <label class="switch">
-          <input type="checkbox" id="sound-enabled" checked>
-          <span class="slider round"></span>
-        </label>
-        <span>Ativar sons</span>
+      <div class="modal-footer">
+        <button id="save-settings" class="settings-btn primary">Salvar</button>
       </div>
-      
-      <div class="settings-section">
-        <h3>Animações</h3>
-        <label class="switch">
-          <input type="checkbox" id="animations-enabled" checked>
-          <span class="slider round"></span>
-        </label>
-        <span>Ativar animações</span>
-      </div>
-      
-      <div class="settings-section">
-        <h3>Cache</h3>
-        <button id="clear-cache-btn" class="settings-btn">Limpar Cache</button>
-      </div>
-      
-      <button id="save-settings" class="settings-btn primary">Salvar Configurações</button>
     </div>
   </div>
 
