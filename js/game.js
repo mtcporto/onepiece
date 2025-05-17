@@ -1191,6 +1191,15 @@ class TrumpGame {
       this.playButton.classList.add('hidden');
       this.nextButton.classList.remove('hidden');
       this.nextButton.focus();
+      
+      // NOVO: Adiciona temporizador para avançar automaticamente após 3 segundos
+      this.autoAdvanceTimer = setTimeout(() => {
+        // Verifica se o botão de próxima rodada ainda está visível (usuário não clicou manualmente)
+        if (!this.nextButton.classList.contains('hidden')) {
+          console.log("Avançando automaticamente para a próxima rodada após 3 segundos");
+          this.nextRound();
+        }
+      }, 3000);
     }
   }
   
